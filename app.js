@@ -5,16 +5,13 @@ log.add(winston.transports.Console, {
     timestamp: true,
     level: 'debug'
 });
-//http://help.b9lab.com/eth-developer-course-technical-help/our-public-geth-nodes
-var hostname = '52.208.46.161';
-var port = '8549';
 
-var jsonRpc = require('./promised-http.js')(hostname,port);
-var ETH_RPC_API = require('./eth-rpc-api.js');
+var hostname = '127.0.0.1';
+var port = '7545';
 
-jsonRpc.call(ETH_RPC_API.net_version)
-    .then(function (response) {
-        log.info(JSON.stringify(response,null,'\t'));
-    }).catch(function (reason) {
-        log.error('Error : ' +JSON.stringify(reason));
-    }).done();
+var client = require('./promised-http.js')(hostname,port);
+var service = require('./service.js')(client);
+
+var addr = "0xc3f72Dd3aB9c29D099015465CB9F3441a1e70796";
+//client.call(ETH_RPC_API.eth_getBalance(addr,"latest"))
+service.getSyncStatus();

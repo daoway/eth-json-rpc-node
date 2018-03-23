@@ -6,5 +6,9 @@ module.exports = {
     net_peerCount : {"jsonrpc":"2.0","method":"net_peerCount","params":[],"id":74},
     eth_getBalance : function (address, tag) {
         return {"jsonrpc":"2.0","method":"eth_getBalance","params":[address, tag],"id":1}
-    }
+    },
+    eth_syncing : {"jsonrpc":"2.0","method":"eth_syncing","params":[],"id":1},
+    eth_mining : {"jsonrpc":"2.0","method":"eth_mining","params":[],"id":71},
+    eth_accounts : {"jsonrpc":"2.0","method":"eth_accounts","params":[],"id":1},
+    eth_blockNumber : {"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":83}
 };
