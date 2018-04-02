@@ -7,11 +7,33 @@ log.add(winston.transports.Console, {
 });
 
 var hostname = '127.0.0.1';
-var port = '7545';
+var port = '8545';
 
+var Q = require('q');
 var client = require('./promised-http.js')(hostname,port);
 var service = require('./service.js')(client);
 
-var addr = "0xc3f72Dd3aB9c29D099015465CB9F3441a1e70796";
-//client.call(ETH_RPC_API.eth_getBalance(addr,"latest"))
-service.getSyncStatus();
+//https://etherscan.io/token/EOS
+//var addr = "0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0";
+//var addr = "0x06451c2a002fee52e118aadd373174cb7868cc36";
+//service.getSyncStatus();
+//service.getLatestBalance(addr);
+
+var contractAddr = '0x06451c2a002fee52e118aadd373174cb7868cc36';
+service.newFilter(contractAddr)
+.then(function (filterIdJson) {
+    console.log('response : '+JSON.stringify(filterIdJson,null,'\t'));
+    return Q(filterIdJson.result);
+}).then(function (filterId) {
+    console.log('filterID : '+JSON.stringify(filterId,null,'\t'));
+    console.log("Sleeping 10 sec....");
+    return Q.all([Q.delay(10000),filterId])
+}).spread(function(delayResult,filterId){
+    console.log("grabbing events for filerID : "+filterId);
+    return Q.all([service.getFilterLogs(filterId),filterId]);
+}).spread(function (result, filterId) {
+    console.log("filter changes (logs) : "+JSON.stringify(result,null,'\t'));
+    return service.uninstallFilter(filterId);
+}).then(function (value) {
+    console.log("Filter uninstall response : "+JSON.stringify(value,null,'\t'));
+}).done();
