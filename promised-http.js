@@ -1,6 +1,6 @@
-module.exports = function(hostname, port){
+module.exports = function(hostname, port, enableDebug){
     var httpRequest = require('request');
-    require('request').debug = true;
+    require('request').debug = enableDebug;
 
     var Q = require('q');
     var request = {};

@@ -10,7 +10,7 @@ var hostname = '127.0.0.1';
 var port = '8545';
 
 var Q = require('q');
-var client = require('./promised-http.js')(hostname,port);
+var client = require('./promised-http.js')(hostname,port,false);
 var service = require('./service.js')(client);
 
 //https://etherscan.io/token/EOS
@@ -19,10 +19,10 @@ var service = require('./service.js')(client);
 //service.getSyncStatus();
 //service.getLatestBalance(addr);
 
-var contractAddr = '0x06451c2a002fee52e118aadd373174cb7868cc36';
+var contractAddr = '0xc3ec0a63e400dcfc200e09d1d0a03610b4f7260d';
 service.newFilter(contractAddr)
 .then(function (filterIdJson) {
-    console.log('response : '+JSON.stringify(filterIdJson,null,'\t'));
+    console.log('new filter : '+JSON.stringify(filterIdJson,null,'\t'));
     return Q(filterIdJson.result);
 }).then(function (filterId) {
     console.log('filterID : '+JSON.stringify(filterId,null,'\t'));

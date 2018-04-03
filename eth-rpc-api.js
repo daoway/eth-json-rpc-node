@@ -11,8 +11,12 @@ module.exports = {
     eth_mining : {"jsonrpc":"2.0","method":"eth_mining","params":[],"id":71},
     eth_accounts : {"jsonrpc":"2.0","method":"eth_accounts","params":[],"id":1},
     eth_blockNumber : {"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":83},
-    eth_newFilter : function (address) { //not good
-        return {"jsonrpc":"2.0","method":"eth_newFilter","params":[{}],"id":73}
+    eth_newFilter : function (address) {
+        return {"jsonrpc":"2.0","method":"eth_newFilter","params":[{
+                "fromBlock": "0x1",
+                "toBlock": "latest",
+                "address" : address
+            }],"id":73}
     },
     eth_getFilterLogs : function (filterId) {
         return {"jsonrpc":"2.0","method":"eth_getFilterLogs","params":[filterId],"id":74}
