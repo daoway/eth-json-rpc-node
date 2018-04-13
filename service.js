@@ -1,6 +1,9 @@
 const log = require('winston');
 const ETH_RPC_API = require('./eth-rpc-api.js');
 var Q = require('q');
+var _ = require('underscore');
+var web3utils = require('web3-utils');
+
 module.exports = function (client) {
     var external = {};
     external.getSyncStatus = function () {
@@ -61,7 +64,10 @@ module.exports = function (client) {
             log.info("grabbing events for filerID : " + filterId);
             return Q.all([external.getFilterLogs(filterId), filterId]);
         }).spread(function (result, filterId) {
-            log.info("filter changes (logs) : " + JSON.stringify(result, null, '\t'));
+            //log.info("filter changes (logs) : " + JSON.stringify(result, null, '\t'));
+            _.each(result.result,function (logItem) {
+                log.info(web3utils.toAscii(logItem.data));
+            });
             return external.uninstallFilter(filterId);
         }).then(function (value) {
             log.info("Filter uninstall response : " + JSON.stringify(value, null, '\t'));

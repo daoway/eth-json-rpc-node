@@ -19,5 +19,5 @@ var service = require('./service.js')(client);
 //service.getSyncStatus();
 //service.getLatestBalance(addr);
 
-var contractAddr = '0xc3ec0a63e400dcfc200e09d1d0a03610b4f7260d';
-service.getEventsByAddress(contractAddr);
+//var contractAddr = '0xdc558b433aad0cd7e241013b9f43fa6699e71365';
+service.getEventsByAddress();

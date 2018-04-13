@@ -11,6 +11,7 @@
   "dependencies": {
     "q": "^1.5.1",
     "request": "^2.85.0",
+    "underscore": "^1.8.3",
     "web3": "^1.0.0-beta.33",
     "winston": "^2.4.1"
   }
